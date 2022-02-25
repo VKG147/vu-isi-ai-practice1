@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AI.Practice1
 {
-    public class SigmoidNeuron : Neuron<double, double>
+    public class SigmoidNeuron : Neuron<float>
     {
-        private static double SigmoidFunc(double input)
+        private static float SigmoidFunc(float a)
         {
-            return 1/(1+Math.Pow(Math.E, input*(-1)))
+            return 1 / (1 + MathF.Exp(-a));
         }
 
-        public SigmoidNeuron(double[] weights, int inputCount) : base()
-        {
-            
-        }
+        public SigmoidNeuron(float[] weights) : base(SigmoidFunc, weights) { }
+        public SigmoidNeuron(int weightCount) : base(SigmoidFunc, weightCount) { }
     }
 }

@@ -3,23 +3,21 @@
 namespace AI.Practice1
 {
     /// <summary>
-    /// 
+    /// A single artifical neuron
     /// </summary>
-    /// <typeparam name="T">Parameter type</typeparam>
-    /// <typeparam name="U">Output type</typeparam>
-    public class Neuron<T, U> where T : notnull
+    /// <typeparam name="T">Output type</typeparam>
+    public class Neuron<T>
     {
-        protected readonly Func<T[], U> _actFunc;
-        protected T[] _weights;
-        protected readonly int _inputCount;
+        protected readonly Func<float, T> _actFunc;
+        protected float[] _weights;
 
-        public T[] Weights 
+        public float[] Weights 
         {
             get { return _weights; }
             set 
             { 
-                if (value.Length != _inputCount)
-                    throw new Exception($"{nameof(value)} length must match input count.");
+                if (value.Length != _weights.Length)
+                    throw new Exception($"Length of {nameof(Weights)} is immutable.");
                 _weights = value;
             }
         }
@@ -30,20 +28,43 @@ namespace AI.Practice1
         /// <param name="actFunc">Activation function</param>
         /// <param name="weights">Initial weights</param>
         /// <param name="inputCount">Number of inputs</param>
-        public Neuron(Func<T[], U> actFunc, T[] weights, int inputCount)
+        public Neuron(Func<float, T> actFunc, float[] weights)
         {
-            if (weights.Length != inputCount) 
-                throw new Exception($"{nameof(weights)} length must match input count.");
             _actFunc = actFunc;
             _weights = weights;
-            _inputCount = inputCount;
         }
 
-        public U Compute(T[] input)
+        public Neuron(Func<float, T> actFunc, int weightCount)
         {
-            if (input.Length != _inputCount)
-                throw new Exception($"{nameof(input)} length must match input count.");
-            return _actFunc(input);
+            _actFunc = actFunc;
+            if (weightCount < 1)
+                throw new Exception($"Value of {nameof(weightCount)} must be greater than 0.");
+            _weights = new float[weightCount];
+        }
+
+        public T Compute(float[] inputs)
+        {
+            if (inputs.Length != _weights.Length)
+                throw new Exception($"{nameof(inputs)} length must be equal to length of {nameof(Weights)}.");
+
+            float a = 0f;
+            for (int i = 0; i < inputs.Length; ++i)
+            {
+                a += inputs[i] * _weights[i];
+            }
+            return _actFunc(a);
+        }
+        public T Compute(float[] inputs, float[] weights)
+        {
+            if (inputs.Length != weights.Length)
+                throw new Exception($"{nameof(inputs)} length must be equal to length of {nameof(weights)}.");
+
+            float a = 0f;
+            for (int i = 0; i < inputs.Length; ++i)
+            {
+                a += inputs[i] * weights[i];
+            }
+            return _actFunc(a);
         }
     }
 }
