@@ -1,5 +1,8 @@
 ﻿namespace AI.Practice1
 {
+    /// <summary>
+    /// A type of Neuron with a binary stop activation function
+    /// </summary>
     public class BinaryStopNeuron : Neuron<float>
     {
         private static float BinaryStopFunc(float a)

@@ -23,7 +23,7 @@ namespace AI.Practice1
         }
 
         /// <summary>
-        /// Note: weights length must match inputCount
+        /// Creates a new Neuron
         /// </summary>
         /// <param name="actFunc">Activation function</param>
         /// <param name="weights">Initial weights</param>
@@ -34,6 +34,11 @@ namespace AI.Practice1
             _weights = weights;
         }
 
+        /// <summary>
+        /// Creates a new Neuron
+        /// </summary>
+        /// <param name="actFunc">Activation function</param>
+        /// <param name="weightCount">Number of weights</param>
         public Neuron(Func<float, T> actFunc, int weightCount)
         {
             _actFunc = actFunc;
@@ -42,6 +47,10 @@ namespace AI.Practice1
             _weights = new float[weightCount];
         }
 
+        /// <summary>
+        /// Calculates the neuron's output based on given inputs
+        /// </summary>
+        /// <returns>Neuron's output</returns>
         public T Compute(float[] inputs)
         {
             if (inputs.Length != _weights.Length)
@@ -54,6 +63,11 @@ namespace AI.Practice1
             }
             return _actFunc(a);
         }
+
+        /// <summary>
+        /// Calculates the neuron's output based on given weights and inputs
+        /// </summary>
+        /// <returns>yNeuron's output</returns>
         public T Compute(float[] inputs, float[] weights)
         {
             if (inputs.Length != weights.Length)

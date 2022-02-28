@@ -2,6 +2,9 @@
 
 namespace AI.Practice1
 {
+    /// <summary>
+    /// A type of Neuron with a sigmoid activation function
+    /// </summary>
     public class SigmoidNeuron : Neuron<float>
     {
         private static float SigmoidFunc(float a)
